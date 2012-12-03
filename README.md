@@ -17,15 +17,14 @@ regular JSON values.
 >>> import jsonmatch
 >>> import re
 
->>> spec = {
+>>> matcher = jsonmatch.compile({
   'a': 123,
   'b': {
     'c': re.compile('[abc][ABC]{3}'),  # we can use regexp
     'd': [1, 2, 3]},
   'e': lambda x: len(x) == 3,          # and callables
   'f': list,                           # and also types
-}
-
+})
 
 # candidates that match the specification yield no breaks
 >>> None == matcher.breaks({
