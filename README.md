@@ -9,7 +9,8 @@ specification in a flexible, informative way.
 We sure do; this isn't a JSON diff tool. This is a tool that determines if a
 candidate JSON dict fits into a possibly-generic schema (or if it breaks it,
 and how). Matching values can include regexps, types, and functions as well as
-regular JSON values.
+regular JSON values. As far as I know, there aren't any libraries out there
+that do this.
 
 ## Example
 
