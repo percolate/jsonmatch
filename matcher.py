@@ -1,11 +1,10 @@
 import pprint
-import inspect
 
 import logging
 log = logging.getLogger(__name__)
 
 
-__all__ = ('compile', 'TypeMatch', 'MissingKey')
+__all__ = ('compile', 'TypeMatch', 'RegexpMatch', 'MissingKey')
 
 
 def compile(spec):
@@ -150,7 +149,7 @@ class JsonMatcher(object):
                 except TypeError:
                     is_val_match = False
 
-                val_to_record = val.pattern
+                val_to_record = RegexpMatch(val.pattern)
             elif callable(val):
                 # use `val` as a callable
                 try:
@@ -226,6 +225,22 @@ class TypeMatch(object):
 
     def __repr__(self):
         return "TypeMatch(%s)" % ', '.join([str(t) for t in self.to_match])
+
+    __str__ = __repr__
+    __unicode__ = __repr__
+
+
+class RegexpMatch(object):
+    """Represents a match that expects a value fitting a regexp pattern."""
+
+    def __init__(self, pattern):
+        self.pattern = pattern
+
+    def __eq__(self, other):
+        return getattr(other, 'pattern', other) == self.pattern
+
+    def __repr__(self):
+        return "RegexpMatch(r'%s')" % self.pattern
 
     __str__ = __repr__
     __unicode__ = __repr__

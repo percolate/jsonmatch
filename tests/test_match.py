@@ -84,7 +84,8 @@ class TestMatch(unittest.TestCase):
 
         self.assertEqual(
             breaks.paths_to_breaks,
-            {('c', 'f'): (self.crazy_regexp.pattern, "doesn't match")})
+            {('c', 'f'): (jsonmatch.RegexpMatch(self.crazy_regexp.pattern),
+                          "doesn't match")})
 
     def test_nonexistent_key(self):
         badd = dict(self.matchingd)
