@@ -40,8 +40,8 @@ values) against candidate JSON dicts.
 True
 
 
-# on the other hand, mismatches yield Breaks objects
->>> b = matcher.breaks({
+# on the other hand, mismatches yield Breaks objects (scalar breakage in 'a')
+>>> print matcher.breaks({
   'a': 1234,
   'b': {
     'c': 'aABC',
@@ -50,9 +50,6 @@ True
   'e': 'one',
   'f': [],
 })
-
-
->>> print b
 
 """
 Expected:
@@ -69,7 +66,8 @@ Diffs:
 """
 
 
-b = matcher.breaks({
+# regexp breakage in 'b.c'
+>>> print matcher.breaks({
   'a': 123,
   'b': {
     'c': "doesn't match",
@@ -78,8 +76,6 @@ b = matcher.breaks({
   'e': 'one',
   'f': [],
 })
-
-print b
 
 """
 Expected:
