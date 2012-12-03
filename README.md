@@ -92,7 +92,7 @@ Got:
 {'a': 123, 'b': {'c': "doesn't match", 'd': [1, 2, 3]}, 'e': 'one', 'f': []}
 
 Diffs:
-{('b', 'c'): ('[abc][ABC]{3}', "doesn't match")}
+{('b', 'c'): (RegexpMatch('[abc][ABC]{3}'), "doesn't match")}
 """
 ```
 
