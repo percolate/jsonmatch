@@ -6,9 +6,10 @@ specification in a flexible, informative way.
 
 ### But don't we already have JSON diff tools in Python?
 
-Yes we do; this isn't a JSON diff tool. This is a tool that matches a 
-possibly-general schema (including regexps, types, and functions as matcher 
-values) against candidate JSON dicts.
+We sure do; this isn't a JSON diff tool. This is a tool that determines if a
+candidate JSON dict fits into a possibly-generic schema (or if it breaks it,
+and how). Matching values can include regexps, types, and functions as well as
+regular JSON values.
 
 ## Example
 
