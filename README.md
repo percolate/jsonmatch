@@ -5,6 +5,15 @@ jsonmatch
 specification in a flexible, informative way. It was created to make testing
 API responses easier.
 
+```python
+>>> import jsonmatch, re
+>>> m = jsonmatch.compile({'a': int, 'b': re.compile(r'\d+')})
+>>> not m.breaks({'a': 1, 'b': '321'})
+True
+>>> m.breaks({'a': 1, 'b': 'not a digit'}).paths_to_breaks
+{('b',): (RegexpMatch(r'\d+'), 'not a digit')}
+```
+
 ## Features
 
 - Flexible matching based on 
