@@ -4,7 +4,7 @@ from distutils.core import setup
 setup(
     name='jsonmatch',
     version='0.1',
-    author="James O'Beirne",
+    author="jamesob",
     author_email='jamesob@percolate.com',
     packages=['jsonmatch'],
     url='https://github.com/percolate/jsonmatch',
