@@ -7,10 +7,10 @@ API responses easier.
 
 ```python
 >>> import jsonmatch, re
->>> m = jsonmatch.compile({'a': int, 'b': re.compile(r'\d+')})
->>> not m.breaks({'a': 1, 'b': '321'})
+>>> m = jsonmatch.compile({'a': int, 'b': re.compile(r'\d+'), 'c': 'c'})
+>>> not m.breaks({'a': 1, 'b': '321', 'c': 'c'})
 True
->>> m.breaks({'a': 1, 'b': 'not a digit'}).paths_to_breaks
+>>> m.breaks({'a': 1, 'b': 'not a digit', 'c': 'c'}).paths_to_breaks
 {('b',): (RegexpMatch(r'\d+'), 'not a digit')}
 ```
 
