@@ -76,6 +76,7 @@ class TestMatch(unittest.TestCase):
             "'b' should be a string type.")
 
     def test_bad_regexp(self):
+        """Test that we break on violating a regexp expectation."""
         badd = dict(self.matchingd)
         badd['c']['f'] = "doesn't match"
 
@@ -88,6 +89,7 @@ class TestMatch(unittest.TestCase):
                           "doesn't match")})
 
     def test_nonexistent_key(self):
+        """Check that we report a nonexistent key properly."""
         badd = dict(self.matchingd)
         badd['whoa'] = 1
 
@@ -97,4 +99,23 @@ class TestMatch(unittest.TestCase):
         self.assertEqual(
             breaks.paths_to_breaks,
             {('whoa',): (jsonmatch.MissingKey(), 1)})
+
+    def test_unordered(self):
+        """Ensure unordered matches work."""
+        badd = dict(self.matchingd)
+        badd['c']['e'] = [3, 1, 2]
+
+        assert not self.matcher.breaks(badd)
+
+    def test_callable_failure(self):
+        """Test the failure of a callable expectation."""
+        badd = dict(self.matchingd)
+        badd['c']['g'] = [1, 2, 3, 4]
+
+        breaks = self.matcher.breaks(badd)
+        assert breaks
+
+        self.assertEqual(
+            breaks.paths_to_breaks,
+            {('c', 'g'): (self.length_lambda, [1, 2, 3, 4])})
 
