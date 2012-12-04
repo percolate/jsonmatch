@@ -2,7 +2,20 @@ jsonmatch
 =========
 
 `jsonmatch` is a small library for matching Python JSON dictionaries against a
-specification in a flexible, informative way.
+specification in a flexible, informative way. It was created to make testing
+API responses easier.
+
+## Features
+
+- Flexible matching based on 
+    - type 
+    - regexp 
+    - callable 
+    - or plain ol' object.
+- Return unmet expectations in a useful datastructure, not just 
+  a string.
+    - `{('path', 'to', 'diff'): (expected_val, actual_val), ...}`
+- Optionally ignore ordering in lists.
 
 ### But don't we already have JSON diff tools in Python?
 
