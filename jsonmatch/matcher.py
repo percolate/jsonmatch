@@ -4,7 +4,10 @@ import logging
 log = logging.getLogger(__name__)
 
 
-__all__ = ('compile', 'TypeMatch', 'RegexpMatch', 'MissingKey')
+__all__ = ('compile',
+           'TypeMatch',
+           'RegexpMatch',
+           'MissingKey')
 
 
 def compile(spec):
@@ -31,6 +34,31 @@ class JsonMatcher(object):
                 a range of values.
         """
         self.spec = spec
+
+    def matches(self, test_d, **kwargs):
+        """
+        Return True if `test_d` matches the specification dict.
+
+        Kwargs:
+            forwarded to JsonMatcher.breaks.
+        """
+        return (not self.breaks(test_d, **kwargs))
+
+    def assert_matches(self, test_d, assertion_msg=None, **kwargs):
+        """
+        Assert that a test dict matches the schema. If not, print the breaks
+        and throw an AssertionError.
+
+        Kwargs:
+            assertion_msg (str): Message to display if the assertion fails.
+            other kwargs are forwarded to JsonMatcher.breaks.
+        """
+        bs = self.breaks(test_d, **kwargs)
+        msg = assertion_msg or "Candidate dict doesn't match schema."
+
+        if bs:
+            print bs.breaks_str
+            raise AssertionError(msg)
 
     def breaks(self, test_d, is_ordered=True):
         """
@@ -169,12 +197,12 @@ class JsonMatcher(object):
 
         return breaks
 
-    def _seq_to_dict(self, seq, sort=False):
+    def _seq_to_dict(self, seq, is_ordered=False):
         """Convert a sequence to a dict where each value is keyed by the seq
         index."""
         seq = seq or []
 
-        if sort:
+        if is_ordered:
             seq = sorted(seq)
 
         return dict(zip(range(len(seq)), seq))
@@ -199,11 +227,15 @@ class Breaks(object):
     def __nonzero__(self):
         return bool(self.paths_to_breaks)
 
-    def __str__(self):
+    @property
+    def breaks_str(self):
         """Print a comparison of expected vs. got."""
         return ("Expected:\n%s\n" % pprint.pformat(self.spec)
                 + "\nGot:\n%s\n" % pprint.pformat(self.against)
                 + "\nDiffs:\n%s\n" % pprint.pformat(self.paths_to_breaks))
+
+    def __str__(self):
+        return "<%d breaks>" % (len(self.paths_to_breaks.keys()))
 
     __unicode__ = __str__
 

@@ -7,9 +7,29 @@ API responses easier.
 
 ```python
 >>> import jsonmatch, re
+
 >>> m = jsonmatch.compile({'a': int, 'b': re.compile(r'\d+'), 'c': 'c'})
->>> not m.breaks({'a': 1, 'b': '321', 'c': 'c'})
+
+>>> m.matches({'a': 1, 'b': '321', 'c': 'c'})
 True
+
+>>> m.matches({'a': 1, 'b': 'not a digit', 'c': 'c'})
+False
+
+>>> m.assert_matches({'a': 1, 'b': 'not a digit', 'c': 'c'})
+Expected:
+{'a': <type 'int'>, 'b': <_sre.SRE_Pattern object at 0x7f70340d5160>, 'c': 'c'}
+
+Got:
+{'a': 1, 'b': 'not a digit', 'c': 'c'}
+
+Diffs:
+{('b',): (RegexpMatch(r'\d+'), 'not a digit')}
+
+---------------------------------------------------------------------------
+AssertionError                            Traceback (most recent call last)
+...
+
 >>> m.breaks({'a': 1, 'b': 'not a digit', 'c': 'c'}).paths_to_breaks
 {('b',): (RegexpMatch(r'\d+'), 'not a digit')}
 ```
@@ -72,7 +92,7 @@ True
   },
   'e': 'one',
   'f': [],
-})
+}).breaks_str
 
 """
 Expected:
@@ -98,7 +118,7 @@ Diffs:
   },
   'e': 'one',
   'f': [],
-})
+}).breaks_str
 
 """
 Expected:

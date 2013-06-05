@@ -45,6 +45,9 @@ class TestMatch(unittest.TestCase):
 
         assert not bs
 
+        assert self.matcher.matches(self.matchingd)
+        self.matcher.assert_matches(self.matchingd)
+
     def test_match_self(self):
         breaks = self.matcher.breaks(self.spec)
         assert breaks, ("Matcher doesn't match against its own spec because "
