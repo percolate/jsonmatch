@@ -51,8 +51,7 @@ AssertionError                            Traceback (most recent call last)
 We sure do; this isn't a JSON diff tool. This is a tool that determines if a
 candidate JSON dict fits into a possibly-generic schema (or if it breaks it,
 and how). Matching values can include regexps, types, and functions as well as
-regular JSON values. As far as I know, there aren't any libraries out there
-that do this.
+regular JSON values. At writing, I haven't come across a tool that does this.
 
 ## Example
 
