@@ -11,5 +11,13 @@ setup(
     license='see LICENCE.txt',
     description='A flexible framework for testing JSON dicts against schemas.',
     zip_safe=False,
+    classifiers=[
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: BSD License',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python :: 2.7',
+        'Topic :: Software Development :: Libraries :: Python Modules',
+        'Topic :: Software Development :: Testing',
+    ],
 )
 
