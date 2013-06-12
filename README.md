@@ -3,7 +3,7 @@ jsonmatch
 
 `jsonmatch` is a small library for matching Python JSON dictionaries against a
 specification in a flexible, informative way. It was created to make testing
-API responses easier.
+API responses simple, quick, and easy.
 
 ```python
 >>> import jsonmatch, re
@@ -45,13 +45,20 @@ AssertionError                            Traceback (most recent call last)
   a string.
     - `{('path', 'to', 'diff'): (expected_val, actual_val), ...}`
 - Optionally ignore ordering in lists.
+ 
 
-### But don't we already have JSON diff tools in Python?
+## Related projects
 
-We sure do; this isn't a JSON diff tool. This is a tool that determines if a
-candidate JSON dict fits into a possibly-generic schema (or if it breaks it,
-and how). Matching values can include regexps, types, and functions as well as
-regular JSON values. At writing, I haven't come across a tool that does this.
+There are some other great solutions out there for doing data validation in
+Python, including
+
+- [onctuous](https://pypi.python.org/pypi/onctuous)
+- [voluptuous](https://github.com/alecthomas/voluptuous)
+- [colander](http://docs.pylonsproject.org/projects/colander/en/latest/basics.html#defining-a-colander-schema)
+
+These libraries are much more robust than jsonmatch, but they're also 
+significantly more complex.
+ 
 
 ## Example
 
@@ -133,5 +140,4 @@ Diffs:
 {('b', 'c'): (RegexpMatch('[abc][ABC]{3}'), "doesn't match")}
 """
 ```
-
 
