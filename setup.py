@@ -10,7 +10,6 @@ setup(
     url='https://github.com/percolate/jsonmatch',
     license='see LICENCE.txt',
     description='A flexible framework for testing JSON dicts against schemas.',
-    zip_safe=False,
     classifiers=[
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
