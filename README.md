@@ -34,6 +34,15 @@ AssertionError                            Traceback (most recent call last)
 {('b',): (RegexpMatch(r'\d+'), 'not a digit')}
 ```
 
+## Installing
+
+jsonmatch is on [pypi](https://pypi.python.org/pypi/jsonmatch)
+
+```
+pip install jsonmatch
+```
+
+
 ## Features
 
 - Flexible matching based on 
