@@ -105,6 +105,7 @@ class TestMatch(unittest.TestCase):
 
     def test_unordered(self):
         """Ensure unordered matches work."""
+        self.spec['c']['e'] = [1, 2, 3]
         badd = dict(self.matchingd)
         badd['c']['e'] = [3, 1, 2]
 
