@@ -2,6 +2,7 @@
 Test matching JSON dicts.
 """
 
+import copy
 import unittest
 import re
 import jsonmatch
@@ -34,8 +35,12 @@ class TestMatch(unittest.TestCase):
                 'g': '123',
             }
         }
+        self.shuffled = copy.deepcopy(self.matchingd)
+        self.shuffled['c']['e'] = [3, 1, 2]
+
 
         self.matcher = jsonmatch.compile(self.spec)
+        self.ordermatcher = jsonmatch.compile(self.matchingd)
 
     def test_match(self):
         """Test that we can match by type and regexp properly."""
@@ -103,12 +108,6 @@ class TestMatch(unittest.TestCase):
             breaks.paths_to_breaks,
             {('whoa',): (jsonmatch.MissingKey(), 1)})
 
-    def test_unordered(self):
-        """Ensure unordered matches work."""
-        badd = dict(self.matchingd)
-        badd['c']['e'] = [3, 1, 2]
-
-        assert not self.matcher.breaks(badd)
 
     def test_callable_failure(self):
         """Test the failure of a callable expectation."""
@@ -122,3 +121,12 @@ class TestMatch(unittest.TestCase):
             breaks.paths_to_breaks,
             {('c', 'g'): (self.length_lambda, [1, 2, 3, 4])})
 
+    def test_unordered(self):
+        """Ordering is not enforced by default"""
+        assert not self.ordermatcher.breaks(self.shuffled)
+
+    def test_ordering_flag_makes_order_matter(self):
+        """Ordering matters if you want it to"""
+        # the flag does what you expect.
+        assert not self.ordermatcher.breaks(self.shuffled, is_ordered=False)
+        assert self.ordermatcher.breaks(self.shuffled, is_ordered=True)

@@ -60,7 +60,7 @@ class JsonMatcher(object):
             print bs.breaks_str
             raise AssertionError(msg)
 
-    def breaks(self, test_d, is_ordered=True):
+    def breaks(self, test_d, is_ordered=False):
         """
         Return None if `test_d` is an acceptable match to `self.spec`,
         Breaks object otherwise.
@@ -202,7 +202,7 @@ class JsonMatcher(object):
         index."""
         seq = seq or []
 
-        if is_ordered:
+        if not is_ordered:
             seq = sorted(seq)
 
         return dict(zip(range(len(seq)), seq))
@@ -289,4 +289,3 @@ class MissingKey(object):
 
     __str__ = __repr__
     __unicode__ = __repr__
-
