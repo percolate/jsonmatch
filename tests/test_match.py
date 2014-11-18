@@ -38,7 +38,6 @@ class TestMatch(unittest.TestCase):
         self.shuffled = copy.deepcopy(self.matchingd)
         self.shuffled['c']['e'] = [3, 1, 2]
 
-
         self.matcher = jsonmatch.compile(self.spec)
         self.ordermatcher = jsonmatch.compile(self.matchingd)
 
@@ -108,7 +107,6 @@ class TestMatch(unittest.TestCase):
             breaks.paths_to_breaks,
             {('whoa',): (jsonmatch.MissingKey(), 1)})
 
-
     def test_callable_failure(self):
         """Test the failure of a callable expectation."""
         badd = dict(self.matchingd)
@@ -122,14 +120,14 @@ class TestMatch(unittest.TestCase):
             {('c', 'g'): (self.length_lambda, [1, 2, 3, 4])})
 
     def test_unordered(self):
-        """Ordering is not enforced by default"""
-        assert not self.ordermatcher.breaks(self.shuffled)
+        """Ordering is enforced by default"""
+        assert self.ordermatcher.breaks(self.shuffled)
 
-    def test_ordering_flag_makes_order_matter(self):
-        """Ordering matters if you want it to"""
+    def test_ordering_flag_(self):
+        """Ordering can be ignored if you want to"""
         # the flag does what you expect.
-        assert not self.ordermatcher.breaks(self.shuffled, is_ordered=False)
         assert self.ordermatcher.breaks(self.shuffled, is_ordered=True)
+        assert not self.ordermatcher.breaks(self.shuffled, is_ordered=False)
 
 if __name__ == '__main__':
     unittest.main()

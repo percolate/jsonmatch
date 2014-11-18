@@ -60,7 +60,7 @@ class JsonMatcher(object):
             print bs.breaks_str
             raise AssertionError(msg)
 
-    def breaks(self, test_d, is_ordered=False):
+    def breaks(self, test_d, is_ordered=True):
         """
         Return None if `test_d` is an acceptable match to `self.spec`,
         Breaks object otherwise.
