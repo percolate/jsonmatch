@@ -3,7 +3,7 @@ from distutils.core import setup
 
 setup(
     name='jsonmatch',
-    version='0.1',
+    version='0.2',
     author="jamesob",
     author_email='jamesob@percolate.com',
     packages=['jsonmatch'],
@@ -19,4 +19,3 @@ setup(
         'Topic :: Software Development :: Testing',
     ],
 )
-

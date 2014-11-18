@@ -202,7 +202,7 @@ class JsonMatcher(object):
         index."""
         seq = seq or []
 
-        if is_ordered:
+        if not is_ordered:
             seq = sorted(seq)
 
         return dict(zip(range(len(seq)), seq))
@@ -289,4 +289,3 @@ class MissingKey(object):
 
     __str__ = __repr__
     __unicode__ = __repr__
-
