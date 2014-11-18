@@ -130,3 +130,6 @@ class TestMatch(unittest.TestCase):
         # the flag does what you expect.
         assert not self.ordermatcher.breaks(self.shuffled, is_ordered=False)
         assert self.ordermatcher.breaks(self.shuffled, is_ordered=True)
+
+if __name__ == '__main__':
+    unittest.main()
