@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='jsonmatch',
-    version='0.2',
+    version='0.3',
     author="jamesob",
     author_email='jamesob@percolate.com',
     packages=['jsonmatch'],

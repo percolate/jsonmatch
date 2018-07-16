@@ -168,7 +168,10 @@ class JsonMatcher(object):
                                                  breaks)
                 append_diff = False
             elif isinstance(val, type):
-                val = (val,)
+                if val == str and six.PY2:
+                    val = (val, six.text_type)
+                else:
+                    val = (val,)
 
                 is_val_match = isinstance(test_val, val)
                 val_to_record = TypeMatch(*val)

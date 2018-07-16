@@ -1,6 +1,8 @@
 jsonmatch
 =========
 
+![build](https://api.travis-ci.org/percolate/jsonmatch.svg?branch=master)
+
 `jsonmatch` is a small library for matching Python JSON dictionaries against a
 specification in a flexible, informative way. It was created to make testing
 API responses simple, quick, and easy.
@@ -45,16 +47,16 @@ pip install jsonmatch
 
 ## Features
 
-- Flexible matching based on 
-    - type 
-    - regexp 
-    - callable 
+- Flexible matching based on
+    - type
+    - regexp
+    - callable
     - or plain ol' object.
-- Return unmet expectations in a useful datastructure, not just 
+- Return unmet expectations in a useful datastructure, not just
   a string.
     - `{('path', 'to', 'diff'): (expected_val, actual_val), ...}`
 - Optionally ignore ordering in lists.
- 
+
 
 ## Related projects
 
@@ -65,9 +67,9 @@ Python, including
 - [voluptuous](https://github.com/alecthomas/voluptuous)
 - [colander](http://docs.pylonsproject.org/projects/colander/en/latest/basics.html#defining-a-colander-schema)
 
-These libraries are much more robust than jsonmatch, but they're also 
+These libraries are much more robust than jsonmatch, but they're also
 significantly more complex.
- 
+
 
 ## Example
 

@@ -26,7 +26,6 @@ class TestMatch(unittest.TestCase):
                 'f': self.crazy_regexp,
                 'g': self.length_lambda,
             },
-            'binary_field': six.binary_type,
         }
 
         self.matchingd = {
@@ -38,13 +37,24 @@ class TestMatch(unittest.TestCase):
                 'f': "aBBB",
                 'g': '123',
             },
-            'binary_field': b'this is a byte string',
         }
         self.shuffled = copy.deepcopy(self.matchingd)
         self.shuffled['c']['e'] = [3, 1, 2]
 
         self.matcher = jsonmatch.compile(self.spec)
         self.ordermatcher = jsonmatch.compile(self.matchingd)
+
+    @unittest.skipIf(six.PY3, 'py3 should use str/byte explicitly')
+    def test_py2_str_should_match_unicode(self):
+        emoji = '\U0001f600'  # unicode
+        matcher = jsonmatch.compile({'key': str})  # str is byte string in py2
+        self.assertTrue(matcher.matches({'key': emoji}))
+
+    @unittest.skipIf(six.PY2, 'py3 should use str/byte explicitly')
+    def test_py3_str_should_not_match_byte(self):
+        matcher = jsonmatch.compile({'key': str})  # str is unicode in py3
+        self.assertFalse(matcher.matches({'key': b'abc'}))
+        self.assertTrue(matcher.matches({'key': 'abc'}))
 
     def test_match(self):
         """Test that we can match by type and regexp properly."""
@@ -67,8 +77,6 @@ class TestMatch(unittest.TestCase):
             {
                 ('b',): (jsonmatch.TypeMatch(six.text_type),
                          six.text_type),
-                ('binary_field',): (jsonmatch.TypeMatch(six.binary_type),
-                                    six.binary_type),
                 ('c', 'e'): (jsonmatch.TypeMatch(list),
                              list),
                 ('c', 'f'): (self.crazy_regexp.pattern,
@@ -135,6 +143,7 @@ class TestMatch(unittest.TestCase):
         # the flag does what you expect.
         assert self.ordermatcher.breaks(self.shuffled, is_ordered=True)
         assert not self.ordermatcher.breaks(self.shuffled, is_ordered=False)
+
 
 if __name__ == '__main__':
     unittest.main()
