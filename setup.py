@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from distutils.core import setup
+from setuptools import setup
 
 setup(
     name='jsonmatch',
@@ -7,6 +7,7 @@ setup(
     author="jamesob",
     author_email='jamesob@percolate.com',
     packages=['jsonmatch'],
+    test_suite='tests',
     url='https://github.com/percolate/jsonmatch',
     license='see LICENCE.txt',
     description='A flexible framework for testing JSON dicts against schemas.',

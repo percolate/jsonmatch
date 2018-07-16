@@ -1,8 +1,11 @@
-import pprint
+from __future__ import absolute_import, unicode_literals, print_function
 
 import logging
-log = logging.getLogger(__name__)
+import pprint
 
+import six
+
+log = logging.getLogger(__name__)
 
 __all__ = ('compile',
            'TypeMatch',
@@ -57,7 +60,7 @@ class JsonMatcher(object):
         msg = assertion_msg or "Candidate dict doesn't match schema."
 
         if bs:
-            print bs.breaks_str
+            print(bs.breaks_str)
             raise AssertionError(msg)
 
     def breaks(self, test_d, is_ordered=True):
@@ -137,7 +140,9 @@ class JsonMatcher(object):
             log.info("Someone is missing keys.")
             return breaks
 
-        for key, val in exp_d.items():
+        # PY3: `for key, val in exp_d.items()`
+        for key, val in six.iteritems(exp_d):
+
             test_val = test_d[key]
             this_key_trail = key_trail + (key,)
 
@@ -163,10 +168,7 @@ class JsonMatcher(object):
                                                  breaks)
                 append_diff = False
             elif isinstance(val, type):
-                if val == str:
-                    val = (str, unicode)
-                else:
-                    val = (val,)
+                val = (val,)
 
                 is_val_match = isinstance(test_val, val)
                 val_to_record = TypeMatch(*val)
@@ -205,7 +207,7 @@ class JsonMatcher(object):
         if not is_ordered:
             seq = sorted(seq)
 
-        return dict(zip(range(len(seq)), seq))
+        return dict(list(zip(list(range(len(seq))), seq)))
 
 
 class Breaks(object):
@@ -224,8 +226,10 @@ class Breaks(object):
     def add_break(self, path_tuple, spec_val, against_val):
         self.paths_to_breaks[path_tuple] = (spec_val, against_val)
 
-    def __nonzero__(self):
+    def __bool__(self):
         return bool(self.paths_to_breaks)
+
+    __nonzero__ = __bool__
 
     @property
     def breaks_str(self):
@@ -235,7 +239,7 @@ class Breaks(object):
                 + "\nDiffs:\n%s\n" % pprint.pformat(self.paths_to_breaks))
 
     def __str__(self):
-        return "<%d breaks>" % (len(self.paths_to_breaks.keys()))
+        return "<%d breaks>" % (len(list(self.paths_to_breaks.keys())))
 
     __unicode__ = __str__
 

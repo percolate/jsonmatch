@@ -1,11 +1,14 @@
 """
 Test matching JSON dicts.
 """
+from __future__ import absolute_import, unicode_literals, print_function
 
 import copy
 import unittest
 import re
 import jsonmatch
+
+import six
 
 
 class TestMatch(unittest.TestCase):
@@ -16,13 +19,14 @@ class TestMatch(unittest.TestCase):
 
         self.spec = {
             'foo': 1,
-            'b': str,
+            'b': six.text_type,
             'c': {
                 'd': [1],
                 'e': list,
                 'f': self.crazy_regexp,
                 'g': self.length_lambda,
-            }
+            },
+            'binary_field': six.binary_type,
         }
 
         self.matchingd = {
@@ -33,7 +37,8 @@ class TestMatch(unittest.TestCase):
                 'e': [1, 2, 3],
                 'f': "aBBB",
                 'g': '123',
-            }
+            },
+            'binary_field': b'this is a byte string',
         }
         self.shuffled = copy.deepcopy(self.matchingd)
         self.shuffled['c']['e'] = [3, 1, 2]
@@ -44,8 +49,8 @@ class TestMatch(unittest.TestCase):
     def test_match(self):
         """Test that we can match by type and regexp properly."""
         bs = self.matcher.breaks(self.matchingd)
-        print bs
-        print type(bs)
+        print(bs)
+        print(type(bs))
 
         assert not bs
 
@@ -60,8 +65,10 @@ class TestMatch(unittest.TestCase):
         self.assertEqual(
             breaks.paths_to_breaks,
             {
-                ('b',): (jsonmatch.TypeMatch(str, unicode),
-                         str),
+                ('b',): (jsonmatch.TypeMatch(six.text_type),
+                         six.text_type),
+                ('binary_field',): (jsonmatch.TypeMatch(six.binary_type),
+                                    six.binary_type),
                 ('c', 'e'): (jsonmatch.TypeMatch(list),
                              list),
                 ('c', 'f'): (self.crazy_regexp.pattern,
@@ -79,7 +86,7 @@ class TestMatch(unittest.TestCase):
 
         self.assertEqual(
             breaks.paths_to_breaks,
-            {(u'b',): (jsonmatch.TypeMatch(str, unicode), 2)},
+            {('b',): (jsonmatch.TypeMatch(six.text_type), 2)},
             "'b' should be a string type.")
 
     def test_bad_regexp(self):
