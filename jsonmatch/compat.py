@@ -5,7 +5,7 @@ import six
 PY3 = six.PY3
 
 
-# Copied from python-future (which it comes django.utils.encoding).
+# Copied from python-future (which it comes from django.utils.encoding).
 # https://github.com/PythonCharmers/python-future/blob/d78983763f6de1c375ee9356ea6e21db723314d5/src/future/utils/__init__.py#L65
 def python_2_unicode_compatible(cls):
     """
