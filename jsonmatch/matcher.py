@@ -5,6 +5,8 @@ import pprint
 
 import six
 
+from .compat import python_2_unicode_compatible
+
 log = logging.getLogger(__name__)
 
 __all__ = ('compile',
@@ -213,6 +215,7 @@ class JsonMatcher(object):
         return dict(list(zip(list(range(len(seq))), seq)))
 
 
+@python_2_unicode_compatible
 class Breaks(object):
     """Represents the diff between a specification dict and a test dict."""
 
@@ -244,9 +247,8 @@ class Breaks(object):
     def __str__(self):
         return "<%d breaks>" % (len(list(self.paths_to_breaks.keys())))
 
-    __unicode__ = __str__
 
-
+@python_2_unicode_compatible
 class TypeMatch(object):
 
     def __init__(self, *to_match):
@@ -262,13 +264,16 @@ class TypeMatch(object):
     def __eq__(self, other):
         return other.to_match == self.to_match
 
+    def __str__(self):
+        return "TypeMatch({})".format(', '.join([
+            six.text_type(t) for t in self.to_match
+        ]))
+
     def __repr__(self):
-        return "TypeMatch(%s)" % ', '.join([str(t) for t in self.to_match])
-
-    __str__ = __repr__
-    __unicode__ = __repr__
+        return self.__str__()
 
 
+@python_2_unicode_compatible
 class RegexpMatch(object):
     """Represents a match that expects a value fitting a regexp pattern."""
 
@@ -278,11 +283,11 @@ class RegexpMatch(object):
     def __eq__(self, other):
         return getattr(other, 'pattern', other) == self.pattern
 
-    def __repr__(self):
-        return "RegexpMatch(r'%s')" % self.pattern
+    def __str__(self):
+        return "RegexpMatch(r'{}')".format(self.pattern)
 
-    __str__ = __repr__
-    __unicode__ = __repr__
+    def __repr__(self):
+        return self.__str__()
 
 
 class MissingKey(object):
@@ -291,8 +296,8 @@ class MissingKey(object):
     def __eq__(self, other):
         return isinstance(other, MissingKey)
 
-    def __repr__(self):
+    def __str__(self):
         return "<MissingKey>"
 
-    __str__ = __repr__
-    __unicode__ = __repr__
+    def __repr__(self):
+        return self.__str__()

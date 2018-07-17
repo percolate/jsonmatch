@@ -46,9 +46,9 @@ class TestMatch(unittest.TestCase):
 
     @unittest.skipIf(six.PY3, 'py3 should use str/byte explicitly')
     def test_py2_str_should_match_unicode(self):
-        emoji = '\U0001f600'  # unicode
         matcher = jsonmatch.compile({'key': str})  # str is byte string in py2
-        self.assertTrue(matcher.matches({'key': emoji}))
+        self.assertTrue(matcher.matches({'key': b'abc'}))
+        self.assertTrue(matcher.matches({'key': '\U0001f600'}))
 
     @unittest.skipIf(six.PY2, 'py3 should use str/byte explicitly')
     def test_py3_str_should_not_match_byte(self):

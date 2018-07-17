@@ -152,3 +152,39 @@ Diffs:
 """
 ```
 
+
+## Python 2/3 compatibility
+
+```python
+from __future__ import print_function, unicode_literals
+
+>>> import jsonmatch
+>>> msg = '\U0001f600'
+>>> print(msg)
+😀
+
+# In PY2, the `str` type will match both unicode and byte string
+
+>>> matcher = jsonmatch.compile({'message': str})
+>>> print(matcher.matches({'message': b'bytestring'}))
+True
+>>> print(matcher.matches({'message': msg}))
+True
+
+
+# In PY3, `str` will ONLY match unicode string
+
+>>> matcher = jsonmatch.compile({'message': str})
+>>> print(matcher.matches({'message': b'bytestring'}))
+False
+>>> print(matcher.matches({'message': msg}))
+True
+
+# In order to match byte string, we must compile as `bytes`
+
+>>> matcher = jsonmatch.compile({'message': bytes})
+>>> print(matcher.matches({'message': b'bytestring'}))
+True
+>>> print(matcher.matches({'message': msg}))
+False
+```
