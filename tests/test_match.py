@@ -129,5 +129,6 @@ class TestMatch(unittest.TestCase):
         assert self.ordermatcher.breaks(self.shuffled, is_ordered=True)
         assert not self.ordermatcher.breaks(self.shuffled, is_ordered=False)
 
+
 if __name__ == '__main__':
     unittest.main()
