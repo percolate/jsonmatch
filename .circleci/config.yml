@@ -14,13 +14,11 @@ jobs:
     steps:
       - checkout
       - run: pip install .
-      - command: python tests/test_match.py
+      - run: python tests/test_match.py
 
 workflows:
   version: 2
   jsonmatch:
     jobs:
       - flake8
-      - run_tests:
-        requires:
-          - flake8
+      - run_tests
