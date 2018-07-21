@@ -34,8 +34,8 @@ def python_2_unicode_compatible(cls):
     >>> str(a) == a.encode('utf-8').decode('utf-8')
     True
 
-    and, on a Unicode-enabled terminal with the right fonts, these both print the
-    Chinese characters for Confucius::
+    and, on a Unicode-enabled terminal with the right fonts, these both print
+    the Chinese characters for Confucius::
 
     >>> print(a)
     >>> print(str(a))

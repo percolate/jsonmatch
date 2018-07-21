@@ -1,8 +1,6 @@
 jsonmatch
 =========
 
-![build](https://api.travis-ci.org/percolate/jsonmatch.svg?branch=master)
-
 `jsonmatch` is a small library for matching Python JSON dictionaries against a
 specification in a flexible, informative way. It was created to make testing
 API responses simple, quick, and easy.
