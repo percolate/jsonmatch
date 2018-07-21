@@ -1,6 +1,8 @@
 jsonmatch
 =========
 
+[![CircleCI](https://circleci.com/gh/percolate/jsonmatch.svg?style=svg)](https://circleci.com/gh/percolate/jsonmatch)
+
 `jsonmatch` is a small library for matching Python JSON dictionaries against a
 specification in a flexible, informative way. It was created to make testing
 API responses simple, quick, and easy.
