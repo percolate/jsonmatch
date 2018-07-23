@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals, print_function
 import logging
 import pprint
 
-from builtins import str
+from builtins import str, object
 from future.utils import python_2_unicode_compatible, iteritems
 
 from .compat import PY2, PY2_STR
@@ -235,8 +235,6 @@ class Breaks(object):
 
     def __bool__(self):
         return bool(self.paths_to_breaks)
-
-    __nonzero__ = __bool__
 
     @property
     def breaks_str(self):
