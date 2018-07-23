@@ -4,11 +4,12 @@ Test matching JSON dicts.
 from __future__ import absolute_import, unicode_literals, print_function
 
 import copy
-import unittest
-import re
 import jsonmatch
+import re
+import unittest
 
-import six
+from builtins import str
+from jsonmatch.compat import PY2_STR, PY2, PY3
 
 
 class TestMatch(unittest.TestCase):
@@ -19,7 +20,7 @@ class TestMatch(unittest.TestCase):
 
         self.spec = {
             'foo': 1,
-            'b': six.text_type,
+            'b': str,
             'c': {
                 'd': [1],
                 'e': list,
@@ -44,15 +45,19 @@ class TestMatch(unittest.TestCase):
         self.matcher = jsonmatch.compile(self.spec)
         self.ordermatcher = jsonmatch.compile(self.matchingd)
 
-    @unittest.skipIf(six.PY3, 'py3 should use str/byte explicitly')
+    @unittest.skipIf(PY3, 'py3 should use str/byte explicitly')
     def test_py2_str_should_match_unicode(self):
-        matcher = jsonmatch.compile({'key': str})  # str is byte string in py2
+        assert PY2_STR is not None
+
+        # this is to ensure all previously written spec with py2 `str`
+        # should continue to work for py2 `unicode` and py2 `str`
+        matcher = jsonmatch.compile({'key': PY2_STR})
         self.assertTrue(matcher.matches({'key': b'abc'}))
         self.assertTrue(matcher.matches({'key': '\U0001f600'}))
 
-    @unittest.skipIf(six.PY2, 'py3 should use str/byte explicitly')
+    @unittest.skipIf(PY2, 'py3 should use str/byte explicitly')
     def test_py3_str_should_not_match_byte(self):
-        matcher = jsonmatch.compile({'key': str})  # str is unicode in py3
+        matcher = jsonmatch.compile({'key': str})
         self.assertFalse(matcher.matches({'key': b'abc'}))
         self.assertTrue(matcher.matches({'key': 'abc'}))
 
@@ -75,8 +80,7 @@ class TestMatch(unittest.TestCase):
         self.assertEqual(
             breaks.paths_to_breaks,
             {
-                ('b',): (jsonmatch.TypeMatch(six.text_type),
-                         six.text_type),
+                ('b',): (jsonmatch.TypeMatch(str), str),
                 ('c', 'e'): (jsonmatch.TypeMatch(list),
                              list),
                 ('c', 'f'): (self.crazy_regexp.pattern,
@@ -94,7 +98,7 @@ class TestMatch(unittest.TestCase):
 
         self.assertEqual(
             breaks.paths_to_breaks,
-            {('b',): (jsonmatch.TypeMatch(six.text_type), 2)},
+            {('b',): (jsonmatch.TypeMatch(str), 2)},
             "'b' should be a string type.")
 
     def test_bad_regexp(self):

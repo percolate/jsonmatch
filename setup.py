@@ -7,7 +7,7 @@ setup(
     author="jamesob",
     author_email='jamesob@percolate.com',
     packages=['jsonmatch'],
-    install_requires=['six==1.11.0'],
+    install_requires=['future==0.16.0'],
     test_suite='tests',
     url='https://github.com/percolate/jsonmatch',
     license='see LICENCE.txt',

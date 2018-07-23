@@ -3,9 +3,10 @@ from __future__ import absolute_import, unicode_literals, print_function
 import logging
 import pprint
 
-import six
+from builtins import str
+from future.utils import python_2_unicode_compatible, iteritems
 
-from .compat import python_2_unicode_compatible
+from .compat import PY2, PY2_STR
 
 log = logging.getLogger(__name__)
 
@@ -143,7 +144,7 @@ class JsonMatcher(object):
             return breaks
 
         # PY3: `for key, val in exp_d.items()`
-        for key, val in six.iteritems(exp_d):
+        for key, val in iteritems(exp_d):
 
             test_val = test_d[key]
             this_key_trail = key_trail + (key,)
@@ -170,8 +171,8 @@ class JsonMatcher(object):
                                                  breaks)
                 append_diff = False
             elif isinstance(val, type):
-                if val == str and six.PY2:
-                    val = (val, six.text_type)
+                if val == PY2_STR and PY2:
+                    val = (val, str)
                 else:
                     val = (val,)
 
@@ -266,7 +267,7 @@ class TypeMatch(object):
 
     def __str__(self):
         return "TypeMatch({})".format(', '.join([
-            six.text_type(t) for t in self.to_match
+            str(t) for t in self.to_match
         ]))
 
     def __repr__(self):
