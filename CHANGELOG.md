@@ -1,4 +1,4 @@
-## jsonmatch 0.3 / 2018-TODO
+## jsonmatch 0.3 / 2018-07-30
 
 + Added py2/3 support
 
