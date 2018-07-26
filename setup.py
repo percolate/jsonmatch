@@ -4,8 +4,8 @@ from setuptools import setup
 setup(
     name='jsonmatch',
     version='0.3',
-    author="jamesob",
-    author_email='jamesob@percolate.com',
+    author="jamesob, bcen",
+    author_email='bocai@percolate.com',
     packages=['jsonmatch'],
     install_requires=['future==0.16.0'],
     test_suite='tests',
