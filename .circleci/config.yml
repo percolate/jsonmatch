@@ -8,17 +8,26 @@ jobs:
       - checkout
       - run: flake8 .
 
-  run_tests:
+  run_py2_tests:
     docker:
       - image: python:2.7
     steps:
       - checkout
       - run: pip install .
-      - run: python tests/test_match.py
+      - run: python setup.py test
+
+  run_py3_tests:
+    docker:
+      - image: python:3.6
+    steps:
+      - checkout
+      - run: pip install .
+      - run: python setup.py test
 
 workflows:
   version: 2
   jsonmatch:
     jobs:
       - flake8
-      - run_tests
+      - run_py2_tests
+      - run_py3_tests
