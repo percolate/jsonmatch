@@ -1,4 +1,4 @@
-## jsonmatch 0.3 / 2018-07-30
+## jsonmatch 0.4 / 2019-06-26
 
 + Updated setup to require `future>=0.16.0`
 
