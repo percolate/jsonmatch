@@ -3,11 +3,11 @@ from setuptools import setup
 
 setup(
     name='jsonmatch',
-    version='0.3',
+    version='0.4',
     author="jamesob, bcen",
     author_email='bocai@percolate.com',
     packages=['jsonmatch'],
-    install_requires=['future==0.16.0'],
+    install_requires=['future>=0.16.0'],
     test_suite='tests',
     url='https://github.com/percolate/jsonmatch',
     license='see LICENCE.txt',
